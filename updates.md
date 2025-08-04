@@ -20,5 +20,6 @@ I am also participating in the **Zemenay Tech Solutions Hackathon**, where I wor
 
 In Week 8, I also started recording devlog-style videos to reflect on my progress and stay accountable — a small step toward better documentation and sharing.
 
-📽️ **Devlog Video:** [Watch here](https://your-video-link.com)
+📽️ **Devlog Video:** [Watch Week 8 Devlog](https://drive.google.com/file/d/1Pz-MRVNDm3wAU08N0yfDR6WZwy9m_703/view?usp=drivesdk)
+
 
