@@ -22,4 +22,91 @@ In Week 8, I also started recording devlog-style videos to reflect on my progres
 
 📽️ **Devlog Video:** [Watch Week 8 Devlog](https://drive.google.com/file/d/1Pz-MRVNDm3wAU08N0yfDR6WZwy9m_703/view?usp=drivesdk)
 
+# 5161AS 7-Segment Display Counter Project(Week 9-14)
+
+## Project Context
+
+This project was originally planned as part of the **Zemenay Tech Solutions Hackathon**.  
+However, I was unable to fully work on it during the hackathon because I traveled to the United States and school commitments over the past few weeks kept me busy. Despite these challenges, I continued experimenting independently, which led to this 7-segment display project.
+
+---
+
+## Project Overview
+
+A **0–9 counter** using a **5161AS common cathode 7-segment display** with an **Arduino Uno**.
+
+**Features:**
+- Counts **0–9 sequentially**.
+- **0** stays longer on display with the **decimal point** illuminated.
+- Each segment protected with a **series resistor**.
+- Clear **pin-to-segment mapping** for easy wiring.
+
+---
+
+## Hardware Setup
+
+| Segment | Arduino Pin |
+|---------|------------|
+| a       | 7          |
+| b       | 6          |
+| c       | 4          |
+| d       | 3          |
+| e       | 2          |
+| f       | 8          |
+| g       | 9          |
+| DP      | 5          |
+
+> Commons → **GND**  
+> Use **330 Ω resistors** for each segment and DP.
+
+---
+
+## Arduino Code
+
+```cpp
+// Pins for segments a–g
+const int segmentPins[7] = {7,6,4,3,2,8,9}; // a,b,c,d,e,f,g
+const int dpPin = 5; // Decimal Point
+
+// Digits 0–9 mapping (a,b,c,d,e,f,g)
+const int digits[10][7] = {
+  {1,1,1,1,1,1,0}, // 0
+  {0,1,1,0,0,0,0}, // 1
+  {1,1,0,1,1,0,1}, // 2
+  {1,1,1,1,0,0,1}, // 3
+  {0,1,1,0,0,1,1}, // 4
+  {1,0,1,1,0,1,1}, // 5
+  {1,0,1,1,1,1,1}, // 6
+  {1,1,1,0,0,0,0}, // 7
+  {1,1,1,1,1,1,1}, // 8
+  {1,1,1,1,0,1,1}  // 9
+};
+
+void setup() {
+  for(int i=0; i<7; i++) pinMode(segmentPins[i], OUTPUT);
+  pinMode(dpPin, OUTPUT);
+}
+
+void loop() {
+  for(int num=0; num<10; num++){
+    displayNumber(num);
+
+    // Light DP only for 0
+    if(num == 0){
+      digitalWrite(dpPin, HIGH);   // DP ON
+      delay(3000);                 // 0 stays 3 seconds
+      digitalWrite(dpPin, LOW);    // DP OFF
+    } else {
+      digitalWrite(dpPin, LOW);    // DP OFF
+      delay(1000);                 // Other numbers 1s
+    }
+  }
+}
+
+void displayNumber(int num){
+  for(int i=0; i<7; i++){
+    digitalWrite(segmentPins[i], digits[num][i]);
+  }
+}
+
 
